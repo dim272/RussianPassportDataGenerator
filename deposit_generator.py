@@ -22,7 +22,7 @@ def itemGenerator():
 
     if item == "Кольцо":
         size = random.choice(ringSize)
-        weight = random.uniform(0.9,9.9)
+        weight = random.uniform(0.9,4.9)
 
         if random.choice(list(range(0, 2))) == 1:
            discard = str(f"Сброс: {(discardGenerator(weight))} на {random.choice(color)} камень")
@@ -35,10 +35,10 @@ def itemGenerator():
             compound = ""
 
         totalWeightList.append(round(weight, 2))
-        return str(f"{item}, размер {size}, вес {round(weight, 2)}гр ({discard}){compound}")
+        return str(f"{item}, вес {round(weight, 2)}гр, размер {size}, ({discard}){compound}")
 
     elif item == "Серьги":
-        weight = random.uniform(2.1, 12.9)
+        weight = random.uniform(2.1, 6.9)
         if random.choice(list(range(0, 2))) == 1:
             discard = str(f"Сброс: {discardGenerator(weight)} на {random.choice(colors)} камни")
         else:
@@ -53,7 +53,7 @@ def itemGenerator():
         return str(f"{item}, вес {round(weight, 2)}гр ({discard}){compound}")
 
     elif item == "Крест":
-        weight = random.uniform(0.45, 9.9)
+        weight = random.uniform(0.45, 3.9)
 
         if random.choice(list(range(0, 3))) == 1:
             discard = str(f"Сброс: {discardGenerator(weight)} на {random.choice(colors)} камни")
@@ -69,7 +69,7 @@ def itemGenerator():
         return str(f"{item}, вес {round(weight, 2)}гр ({discard}){compound}")
 
     elif item == "Подвеска":
-        weight = random.uniform(0.75, 7.9)
+        weight = random.uniform(0.75, 3.9)
 
         if random.choice(list(range(0, 6))) == 5:
             discard = str(f"Сброс: {discardGenerator(weight)} на {random.choice(colors)} камни")
@@ -87,9 +87,9 @@ def itemGenerator():
     elif item == "Браслет":
         length = random.choice(braceletLengthList)
 
-        weight = random.uniform(7.1, 59.9)
+        weight = random.uniform(6.1, 12.9)
 
-        discard = str(f"Сброс: 0,{random.choice(list(range(1,6)))}гр на пружинку")
+        discard = str(f"Сброс: 0,{random.choice(list(range(1,6)))}гр на пружину")
 
         if random.choice(list(range(0, 6))) == 1:
             compound = str(", два сплава")
@@ -101,8 +101,8 @@ def itemGenerator():
 
     elif item == "Цепь":
         length = random.choice(chainLengthList)
-        weight = random.uniform(3.1, 119.9)
-        discard = str(f"Сброс: 0,{random.choice(list(range(1, 6)))}гр на пружинку")
+        weight = random.uniform(3.1, 21.9)
+        discard = str(f"Сброс: 0,{random.choice(list(range(1, 6)))}гр на пружину")
 
         if random.choice(list(range(0, 6))) == 1:
             compound = str(", два сплава")
@@ -115,7 +115,6 @@ def itemGenerator():
     else:
         return str("Ошибка по названию изделия")
 
-
 def totalWeightCalculate():
     x = len(totalWeightList)
     sum = 0
@@ -126,19 +125,29 @@ def totalWeightCalculate():
     return sum
 
 def start():
-    val = int(input("Сколько сгенерировать залогов?"))
-    maxNumberItems = int(input("До скольки изделий сгенерировать в одном билете?"))
+    val = int(input("Сколько сгенерировать залогов? "))
+    minNumberItems = int(input("Сколько изделий должно быть в одном билете минимум? "))
+
+    if minNumberItems < 1:
+        minNumberItems = 1
+        print(f"Минимальное количесвто изделий в билете будет равно 1")
+
+    maxNumberItems = int(input("Сколько изделий должно быть в одном билете маскимум? "))
 
     file = open(f'/home/let/Документы/PassGen/deposits.txt', "at")
 
+    numberOfDeposit = 1
+
     while val > 0:
-        randomItems = random.choice(list(range(1, (maxNumberItems + 1))))
+        randomItems = random.choice(list(range(minNumberItems, (maxNumberItems + 1))))
+        file.write(str(f"ЗАЛОГОВЫЙ БИЛЕТ №{numberOfDeposit} \n "))
         file.write(str(f"В этом билете будет {randomItems} предмет(ов):\n "))
         while randomItems > 0:
             file.write(str(f"{itemGenerator()}\n "))
             randomItems -= 1
         file.write(str("\n"))
         file.write(str(f"Общий вес = {round(totalWeightCalculate(), 2)}гр \n \n \n "))
+        numberOfDeposit += 1
         val -= 1
 
     file.close()

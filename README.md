@@ -9,6 +9,8 @@
 * Date of birth
 * Place of Birth
 * Address
+* Phone number
+* E-mail
 
 __All data are real:__  
 
@@ -32,6 +34,8 @@ The data is generated randomly using the "Random" library
 * Дату рождения
 * Место рождения
 * Адресс
+* Телефон
+* Электронная почта
 
 __Все данные реальны:__  
 
