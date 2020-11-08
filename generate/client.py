@@ -5,8 +5,8 @@ from russian_names import RussianNames
 day = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
        '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
 month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-yearOfBirth = list(range(1935, 2002))
-yearOfIssue = list(range(1976, 2020))
+yearOfBirth = list(range(1935, 1986))
+yearOfIssue = list(range(1991, 2020))
 houseApartmentNumbers = list(range(1, 299))
 passportSeries = list(range(3700, 8999))
 passportNumbers = list(range(101010, 990099))
@@ -33,7 +33,7 @@ cities = ['Москва', 'Санкт-Петербург', 'Новосибирс
           'Щёлково', 'Елец', 'Новокуйбышевск', 'Ачинск', 'Ноябрьск', 'Сергиев Посад', 'Дербент', 'Октябрьский', 'Кызыл',
           'Северск', 'Арзамас', 'Обнинск', 'Ленинск-Кузнецкий', 'Киселёвск', 'Междуреченск', 'Ухта', 'Жуковский',
           'Элиста', 'Артём', 'Новотроицк', 'Батайск', 'Великие Луки', 'Тобольск', 'Магадан', 'Красногорск']
-streets = ['Центральная', 'Центральная', 'Молодежная', 'Школьная', 'Лесная', 'Советская', 'Новая', 'Садовая',
+streets = ['Центральная', 'Молодежная', 'Школьная', 'Лесная', 'Советская', 'Новая', 'Садовая',
            'Набережная', 'Заречная', 'Зеленая', 'Мира', 'Ленина', 'Полевая', 'Луговая', 'Октябрьская', 'Комсомольская',
            'Гагарина', 'Первомайская', 'Северная', 'Солнечная', 'Степная', 'Южная', 'Береговая', 'Кирова', 'Пионерская',
            'Юбилейная', 'Речная', 'Нагорная', 'Восточная', 'Колхозная', 'Пушкина', 'Пролетарская', 'Железнодорожная',
@@ -102,49 +102,76 @@ issued = ['Управление МВД России по Белгородско�
           'МВД по Карачаево-Черкесской Республике ', 'МВД по Республике Северная Осетия – Алания ',
           'Главное управление МВД России по Ставропольскому краю ', 'МВД по Чеченской Республике ']
 
-englishWords = ['area', 'book', 'business', 'case', 'child', 'company', 'country', 'day', 'eye', 'fact', 'family',
+english_words = ['area', 'book', 'business', 'case', 'child', 'company', 'country', 'day', 'eye', 'fact', 'family',
                 'government', 'group', 'hand', 'home', 'job', 'life', 'lot', 'man', 'money', 'month', 'mother', 'Mr',
                 'night', 'number', 'part', 'people', 'place', 'point', 'problem', 'program', 'question', 'right',
                 'room', 'school', 'state', 'story', 'student', 'study', 'system', 'thing', 'time', 'water', 'way',
                 'week', 'woman', 'word', 'work', 'world', 'year']
 
-punctuationMarks = ['.', '_', '', '-']
-mailHostings = ['gmail.com', 'icloud.com', 'mail.ru', 'yandex.ru', 'yahoo.com', 'bk.ru', 'list.ru', 'inbox.ru',
+punctuation_marks = ['.', '_', '', '-']
+mail_hostings = ['gmail.com', 'icloud.com', 'mail.ru', 'yandex.ru', 'yahoo.com', 'bk.ru', 'list.ru', 'inbox.ru',
                 'rambler.ru']
 
 date = datetime.now()
 
-
-def emailGenerator():
+def email_generator():
     if random.choice(list(range(0, 2))):
         email = str(
-            f"{random.choice(englishWords)}{random.choice(punctuationMarks)}{random.choice(englishWords)}@{random.choice(mailHostings)}")
+            f"{random.choice(english_words)}{random.choice(punctuation_marks)}{random.choice(english_words)}@{random.choice(mail_hostings)}")
         return email
     else:
         email = str(
-            f"{random.choice(englishWords)}{random.choice(punctuationMarks)}{random.choice(englishWords)}{random.choice(yearOfBirth)}@{random.choice(mailHostings)}")
+            f"{random.choice(english_words)}{random.choice(punctuation_marks)}{random.choice(english_words)}{random.choice(yearOfBirth)}@{random.choice(mail_hostings)}")
         return email
 
+def phone_number_generator():
+    phone_number = ['8', '-', '9']
+    numbers = 11
 
-def generate(x):
+    while numbers >= 0:
+        if numbers == 9 or numbers == 5 or numbers == 2:
+            phone_number.append('-')
+            numbers -= 1
+            continue
+        phone_number.append(str(random.choice(phoneNumbers)))
+        numbers -= 1
+
+    result = ''.join(phone_number)
+
+    return result
+
+def name_generator():
+    name_list = RussianNames().get_person().split()
+    name_list[0], name_list[1], name_list[2] = name_list[2], name_list[0], name_list[1]
+    name = (' '.join(name_list))
+    return name
+
+def client_generator(x):
     file = open(f'/home/let/Документы/PassGen/clients.txt', "at")
 
     while x > 0:
         file.write(str(
-            f" {RussianNames().get_person()}\n Телефон: 8-9{random.choice(phoneNumbers)}{random.choice(phoneNumbers)}-{random.choice(phoneNumbers)}{random.choice(phoneNumbers)}{random.choice(phoneNumbers)}-{random.choice(phoneNumbers)}{random.choice(phoneNumbers)}-{random.choice(phoneNumbers)}{random.choice(phoneNumbers)}\n Электронная почта: {emailGenerator()}\n Дата рождения: {random.choice(day)}.{random.choice(month)}.{random.choice(yearOfBirth)}\n Место рождения: РОССИЯ гор. {random.choice(cities)}\n Паспорт: {random.choice(passportSeries)} {random.choice(passportNumbers)}\n Код подразделения: {random.choice(departmentCode)}-{random.choice(departmentCode)}\n Выдан: {random.choice(issued)}\n Дата выдачи: {random.choice(day)}.{random.choice(month)}.{random.choice(yearOfIssue)}\n Адресс: гор. {random.choice(cities)}, ул. {random.choice(streets)}, дом {random.choice(houseApartmentNumbers)}, кв. {random.choice(houseApartmentNumbers)}\n\n"))
+            f" {name_generator()}\n "
+            f" Телефон: {phone_number_generator()}\n "
+            f" Электронная почта: {email_generator()}\n "
+            f" Дата рождения: {random.choice(day)}.{random.choice(month)}.{random.choice(yearOfBirth)}\n "
+            f" Место рождения: РОССИЯ гор. {random.choice(cities)}\n "
+            f" Паспорт: {random.choice(passportSeries)} {random.choice(passportNumbers)}\n "
+            f" Код подразделения: {random.choice(departmentCode)}-{random.choice(departmentCode)}\n "
+            f" Выдан: {random.choice(issued)}\n "
+            f" Дата выдачи: {random.choice(day)}.{random.choice(month)}.{random.choice(yearOfIssue)}\n "
+            f" Адресс: гор. {random.choice(cities)}, ул. {random.choice(streets)}, дом {random.choice(houseApartmentNumbers)}, кв. {random.choice(houseApartmentNumbers)}\n\n"))
         x -= 1
 
     file.close()
     print(f"Создан файл {file}")
 
-
 def start():
     x = int(input("Сколько данных нужно сгенерировать?"))
     if x >= 1:
-        generate(x)
+        client_generator(x)
     else:
         print(f"{x} - это не цифра. Попробуйте снова.")
         start()
-
 
 start()
