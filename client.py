@@ -5,7 +5,7 @@ from russian_names import RussianNames
 day = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19',
        '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30']
 month = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
-yearOfBirth = list(range(1935, 1986))
+yearOfBirth = list(range(1950, 1986))
 yearOfIssue = list(range(1991, 2020))
 houseApartmentNumbers = list(range(1, 299))
 passportSeries = list(range(3700, 8999))
@@ -147,7 +147,7 @@ def name_generator():
     return name
 
 def client_generator(x):
-    file = open(f'/home/let/Документы/PassGen/clients.txt', "at")
+    file = open(f'clients.txt', "at")
 
     while x > 0:
         file.write(str(
@@ -164,7 +164,7 @@ def client_generator(x):
         x -= 1
 
     file.close()
-    print(f"Создан файл {file}")
+    print(f"Файл создан")
 
 def start():
     x = int(input("Сколько данных нужно сгенерировать?"))
